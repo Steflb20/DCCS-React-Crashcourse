@@ -1,12 +1,21 @@
+import { Movie } from "../../common/models/movie.model";
 import MovieListItem from "./movie-list-item/MovieListItem";
 import "./MovieOverview.styles.css"
 
-const MovieOverview: React.FC = () => {
+interface IMovieOverviewProps {
+    movies : Movie[],
+    onFavoriteClick(id : number) : void,
+    onWatchClick(id : number) : void,
+    onDeleteClick(id : number) : void,
+    onEditMovie(movie ?: Movie) : void,
+}
+
+const MovieOverview : React.FC<IMovieOverviewProps> = ({ movies, onFavoriteClick, onWatchClick, onDeleteClick, onEditMovie }) => {
 
     return (
         <div className="movie-overview-root">
             <div className="movie-overview-button-container">
-                <button onClick={() => {}}>Add movie</button>
+                <button onClick={() => onEditMovie()}>Add movie</button>
             </div>
 
             <div className="movie-overview-item-container">
@@ -25,6 +34,15 @@ const MovieOverview: React.FC = () => {
                     <div className="movie-overview-header-column" style={{ width: "40px" }} />
                 </div>
             </div>
+
+            { movies.map((movie, index) => <MovieListItem   movie={movie} 
+                                                            orderNr={index + 1} 
+                                                            key={ movie.id } 
+                                                            onFavoriteClick={onFavoriteClick} 
+                                                            onWatchClick={onWatchClick} 
+                                                            onDeleteClick={onDeleteClick}
+                                                            onEdit={() => onEditMovie(movie)}
+                                            /> )}
         </div>
     )
 }

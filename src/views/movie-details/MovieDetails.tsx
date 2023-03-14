@@ -1,8 +1,23 @@
+import { useState } from "react";
 import {Movie} from "../../common/models/movie.model";
 import "./MovieDetails.styles.css"
 
-const MovieDetails: React.FC = (
-) => {
+interface IMovieDetailsProps {
+    movie : Movie | undefined;
+}
+
+const MovieDetails: React.FC<IMovieDetailsProps> = ({ movie }) => {
+
+    const initialMovie : Movie = {
+        title : "",
+        description : "",
+        imageUrl : "",
+        isFavorite : false,
+        isWatched : false,
+        year: 1999
+    };
+
+    const [formState, setFormState] = useState<Movie>(movie ?? initialMovie);
 
     return (
         <div className={"movie-details-root"}>
@@ -13,7 +28,7 @@ const MovieDetails: React.FC = (
             <div className="movie-details-content">
                 <div className="movie-details-img-container">
                     <img src={
-                        ""
+                        formState.imageUrl
                     } alt="None"/>
                 </div>
                 <div className="movie-details-form-container">
@@ -22,7 +37,7 @@ const MovieDetails: React.FC = (
                         <input
                             type="text"
                             maxLength={50}
-                            value={""}
+                            value={formState.title}
                             onChange={e => {}}
                         />
                     </div>
@@ -35,7 +50,7 @@ const MovieDetails: React.FC = (
                             type="number"
                             min={1900}
                             max={2023}
-                            value={0}
+                            value={formState.year}
                             onChange={e => {}}
                         />
                     </div>
@@ -44,7 +59,7 @@ const MovieDetails: React.FC = (
                         <input
                             type="text"
                             maxLength={200}
-                            value={""}
+                            value={formState.description}
                             onChange={e => {}}
                         />
                     </div>
@@ -52,7 +67,7 @@ const MovieDetails: React.FC = (
                         <label>Image url</label>
                         <input
                             type="text"
-                            value={""}
+                            value={formState.imageUrl}
                             onChange={e => {}}
                         />
                     </div>
