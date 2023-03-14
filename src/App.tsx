@@ -30,7 +30,7 @@ function App() {
       )
     } else if (selectedView === AppViews.MovieDetails) {
       return (
-        <MovieDetails movie={selectedMovie}/>
+        <MovieDetails movie={selectedMovie} handleSave={handleSaveMovie}/>
       )
     }
 
@@ -77,6 +77,26 @@ function App() {
   const handleDeleteClick = (id : number) => {
     const updated = movies.filter(e => e.id != id);
     setMovies(updated);
+  }
+
+  const handleSaveMovie = (movie : Movie) => {
+    if (movie.id == null) {
+      const id = Number(Math.random().toString().slice(2));
+      setMovies([ ...movies, { ...movie, id : id } ])
+    } else {
+      const updated = movies.map(e => {
+        if (e.id === movie.id) {
+          return movie;
+        } else {
+          return e;
+        }
+      })
+
+      setMovies(updated);
+
+    }
+
+    setSelectedView(AppViews.MovieOverview);
   }
 
   return (

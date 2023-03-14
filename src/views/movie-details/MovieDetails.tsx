@@ -4,9 +4,10 @@ import "./MovieDetails.styles.css"
 
 interface IMovieDetailsProps {
     movie : Movie | undefined;
+    handleSave(movie : Movie) : void
 }
 
-const MovieDetails: React.FC<IMovieDetailsProps> = ({ movie }) => {
+const MovieDetails: React.FC<IMovieDetailsProps> = ({ movie, handleSave }) => {
 
     const initialMovie : Movie = {
         title : "",
@@ -18,6 +19,34 @@ const MovieDetails: React.FC<IMovieDetailsProps> = ({ movie }) => {
     };
 
     const [formState, setFormState] = useState<Movie>(movie ?? initialMovie);
+
+    const handleTitleChange = (newValue : string) => {
+        setFormState({
+            ...formState,
+            title : newValue
+        });
+    }
+
+    const handleYearChange = (newValue : number) => {
+        setFormState({
+            ...formState,
+            year : newValue
+        })
+    }
+
+    const handleDescChange = (newValue : string) => {
+        setFormState({
+            ...formState,
+            description : newValue
+        });
+    }
+
+    const handleImageUrlChange = (newValue : string) => {
+        setFormState({
+            ...formState,
+            imageUrl : newValue
+        });
+    }
 
     return (
         <div className={"movie-details-root"}>
@@ -38,7 +67,7 @@ const MovieDetails: React.FC<IMovieDetailsProps> = ({ movie }) => {
                             type="text"
                             maxLength={50}
                             value={formState.title}
-                            onChange={e => {}}
+                            onChange={e => {handleTitleChange(e.target.value)}}
                         />
                     </div>
                     <div className="movie-details-from-field">
@@ -51,7 +80,7 @@ const MovieDetails: React.FC<IMovieDetailsProps> = ({ movie }) => {
                             min={1900}
                             max={2023}
                             value={formState.year}
-                            onChange={e => {}}
+                            onChange={e => {handleYearChange(e.target.valueAsNumber)}}
                         />
                     </div>
                     <div className="movie-details-from-field">
@@ -60,7 +89,7 @@ const MovieDetails: React.FC<IMovieDetailsProps> = ({ movie }) => {
                             type="text"
                             maxLength={200}
                             value={formState.description}
-                            onChange={e => {}}
+                            onChange={e => {handleDescChange(e.target.value)}}
                         />
                     </div>
                     <div className="movie-details-from-field">
@@ -68,7 +97,7 @@ const MovieDetails: React.FC<IMovieDetailsProps> = ({ movie }) => {
                         <input
                             type="text"
                             value={formState.imageUrl}
-                            onChange={e => {}}
+                            onChange={e => {handleImageUrlChange(e.target.value)}}
                         />
                     </div>
                 </div>
@@ -78,8 +107,8 @@ const MovieDetails: React.FC<IMovieDetailsProps> = ({ movie }) => {
                 <button className="movie-details-cancel-button" onClick={() => {}}>Cancel</button>
                 <button
                     className="movie-details-save-button"
-                    onClick={() => {}}
-                    disabled={true}
+                    onClick={() => handleSave(formState)}
+                    disabled={false}
                 >Save
                 </button>
             </div>
