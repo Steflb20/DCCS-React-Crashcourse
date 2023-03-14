@@ -4,10 +4,11 @@ import "./MovieDetails.styles.css"
 
 interface IMovieDetailsProps {
     movie : Movie | undefined;
-    handleSave(movie : Movie) : void
+    handleSave(movie : Movie) : void,
+    handleGoBack() : void
 }
 
-const MovieDetails: React.FC<IMovieDetailsProps> = ({ movie, handleSave }) => {
+const MovieDetails: React.FC<IMovieDetailsProps> = ({ movie, handleSave, handleGoBack }) => {
 
     const initialMovie : Movie = {
         title : "",
@@ -104,7 +105,7 @@ const MovieDetails: React.FC<IMovieDetailsProps> = ({ movie, handleSave }) => {
             </div>
 
             <div className="movie-details-button-container">
-                <button className="movie-details-cancel-button" onClick={() => {}}>Cancel</button>
+                <button className="movie-details-cancel-button" onClick={() => handleGoBack()}>Cancel</button>
                 <button
                     className="movie-details-save-button"
                     onClick={() => handleSave(formState)}

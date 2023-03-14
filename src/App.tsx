@@ -30,7 +30,7 @@ function App() {
       )
     } else if (selectedView === AppViews.MovieDetails) {
       return (
-        <MovieDetails movie={selectedMovie} handleSave={handleSaveMovie}/>
+        <MovieDetails movie={selectedMovie} handleSave={handleSaveMovie} handleGoBack={handleGoBack}/>
       )
     }
 
@@ -77,6 +77,11 @@ function App() {
   const handleDeleteClick = (id : number) => {
     const updated = movies.filter(e => e.id != id);
     setMovies(updated);
+  }
+
+  const handleGoBack = () => {
+    setSelectedView(AppViews.MovieOverview);
+    setSelectedMovie(undefined);
   }
 
   const handleSaveMovie = (movie : Movie) => {
