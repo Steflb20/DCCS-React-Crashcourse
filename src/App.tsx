@@ -3,7 +3,7 @@ import "./App.css"
 import { Movie } from "./common/models/movie.model";
 import { useState } from "react";
 import MovieOverview from "./views/movie-overview/MovieOverview";
-import { moviesMockData } from "./common/mock-data";
+import { genresMockData, moviesMockData } from "./common/mock-data";
 import MovieDetails from "./views/movie-details/MovieDetails";
 
 
@@ -30,7 +30,7 @@ function App() {
       )
     } else if (selectedView === AppViews.MovieDetails) {
       return (
-        <MovieDetails movie={selectedMovie} handleSave={handleSaveMovie} handleGoBack={handleGoBack}/>
+        <MovieDetails movie={selectedMovie} handleSave={handleSaveMovie} handleGoBack={handleGoBack} genres={genresMockData}/>
       )
     }
 

@@ -1,14 +1,16 @@
 import { useState } from "react";
+import { Genre } from "../../common/models/genre.model";
 import {Movie} from "../../common/models/movie.model";
 import "./MovieDetails.styles.css"
 
 interface IMovieDetailsProps {
     movie : Movie | undefined;
     handleSave(movie : Movie) : void,
-    handleGoBack() : void
+    handleGoBack() : void,
+    genres : Genre[],
 }
 
-const MovieDetails: React.FC<IMovieDetailsProps> = ({ movie, handleSave, handleGoBack }) => {
+const MovieDetails: React.FC<IMovieDetailsProps> = ({ movie, handleSave, handleGoBack, genres }) => {
 
     const initialMovie : Movie = {
         title : "",
@@ -49,6 +51,13 @@ const MovieDetails: React.FC<IMovieDetailsProps> = ({ movie, handleSave, handleG
         });
     }
 
+    const handleGenreSelect = (id : number) => {
+        setFormState({
+            ...formState,
+            genre : genres.find(e => e.id === id)
+        });
+    }
+
     return (
         <div className={"movie-details-root"}>
             <div className="movie-details-header">
@@ -73,6 +82,9 @@ const MovieDetails: React.FC<IMovieDetailsProps> = ({ movie, handleSave, handleG
                     </div>
                     <div className="movie-details-from-field">
                         <label>Genre</label>
+                        <select value={formState.genre?.id} onChange={e => handleGenreSelect(Number(e.target.value))}>
+                            {genres.map(e => <option key={e.id} value={e.id}>{e.name}</option>)}
+                        </select>
                     </div>
                     <div className="movie-details-from-field">
                         <label>Year</label>
